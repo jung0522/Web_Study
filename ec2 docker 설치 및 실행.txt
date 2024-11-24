@@ -1,0 +1,35 @@
+ec2 docker 설치 및 실행
+
+1. Docker 설치 (Ubuntu) Ubuntu 24.04에서 Docker를 설치하려면, 아래 명령어를 실행하여 Docker를 설치합니다.
+
+sudo apt update
+sudo apt install docker.io
+
+2. Docker 서비스 시작 Docker를 설치한 후, Docker 서비스를 시작하고 부팅 시 자동으로 시작되도록 설정합니다.
+
+
+sudo systemctl start docker
+sudo systemctl enable docker
+
+2-1. Docker 버전 확인 Docker가 제대로 설치되었는지 확인하려면 아래 명령어를 실행하여 Docker 버전을 확인합니다.
+
+docker --version
+
+3. Docker 그룹에 사용자 추가
+sudo 없이 Docker를 사용하려면 현재 사용자(여기서는 ubuntu)를 Docker 그룹에 추가해야 합니다. 아래 명령어를 사용하여 Docker 그룹에 사용자 추가 후 세션을 새로 시작합니다:
+
+sudo usermod -aG docker $USER
+
+3.1 그 후, 아래 명령어로 새로운 그룹 설정을 적용할 수 있습니다:
+
+newgrp docker
+
+4. Docker Hub에서 이미지 풀(Pull)
+Docker Hub에서 이미지를 EC2로 다운로드하려면 아래 명령어를 사용합니다. 예를 들어, jung0522/my-app 이미지를 다운로드하려면 다음과 같이 입력합니다:
+
+docker pull jung0522/my-app:latest
+
+5. Docker 컨테이너 실행
+이미지를 다운로드한 후, 컨테이너를 실행합니다. docker run 명령어를 사용하여 이미지를 컨테이너로 실행할 수 있습니다:
+
+docker run -d -p 80:8080 --name my-app jung0522/my-app:latest
